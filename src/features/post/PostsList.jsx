@@ -1,31 +1,46 @@
+import { useEffect } from "react";
 import AddPostForm from "./AddPostForm";
-import PostAuthor from "./PostAuthor";
-import ReactionButtons from "./ReactionButtons";
-import TimeAgo from "./TimeAgo";
-import { selectAllPosts } from "./postSlice";
-import { useSelector } from "react-redux";
+import {
+  selectAllPosts,
+  getPostsStatus,
+  fetchPosts,
+  getPostsError,
+} from "./postSlice";
+import { useSelector, useDispatch } from "react-redux";
+import PostsExcerpt from "./PostsExcerpt";
 
 const PostsList = () => {
+  const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
+  const postsStatus = useSelector(getPostsStatus);
+  const error = useSelector(getPostsError);
 
-  const orderedPosts = posts
-    .slice()
-    .sort((a, b) => b.date.localeCompare(a.date));
+  useEffect(() => {
+    if (postsStatus === "idle") {
+      dispatch(fetchPosts());
+    }
+  }, [postsStatus, dispatch]);
 
-  const renderedPosts = orderedPosts.map((post) => (
-    <article key={post.id}>
-      <h3>{post.title}</h3>
-      <p>{post.content.substring(0, 100)}</p>
-      <PostAuthor userId={post.userId} />
-      <TimeAgo timestamp={post.date} />
-      <ReactionButtons post={post} />
-    </article>
-  ));
+  let content;
+
+  if (postsStatus === "loading") {
+    content = <p>loading...</p>;
+  } else if (postsStatus === "succeeded") {
+    const orderedPosts = posts
+      .slice()
+      .sort((a, b) => b.date.localeCompare(a.date));
+    content = orderedPosts.map((post) => (
+      <PostsExcerpt post={post} key={post.id} />
+    ));
+  } else {
+    content = <p>{error}</p>;
+  }
+
   return (
     <section>
       <AddPostForm />
       <h2>Posts</h2>
-      {renderedPosts}
+      {content}
     </section>
   );
 };
