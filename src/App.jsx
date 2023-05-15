@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 import './App.css'
 import Counter from './features/counter/Counter';
+import PostsList from './features/post/PostsList';
 
 function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
-      <Counter />
+      <PostsList />
     </>
   )
 }
