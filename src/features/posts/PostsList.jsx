@@ -1,25 +1,24 @@
 import { useEffect } from "react";
-import AddPostForm from "./AddPostForm";
 import {
   selectAllPosts,
   getPostsStatus,
   fetchPosts,
   getPostsError,
 } from "./postSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import PostsExcerpt from "./PostsExcerpt";
 
 const PostsList = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
   const postsStatus = useSelector(getPostsStatus);
   const error = useSelector(getPostsError);
 
-  useEffect(() => {
-    if (postsStatus === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [postsStatus, dispatch]);
+  // useEffect(() => {
+  //   if (postsStatus === "idle") {
+  //     dispatch(fetchPosts());
+  //   }
+  // }, [postsStatus, dispatch]);
 
   let content;
 
@@ -38,8 +37,6 @@ const PostsList = () => {
 
   return (
     <section>
-      <AddPostForm />
-      <h2>Posts</h2>
       {content}
     </section>
   );
