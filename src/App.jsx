@@ -9,12 +9,14 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import EditPostForm from "./features/posts/EditPostForm";
 import UsersList from "./features/users/UsersList";
 import User from "./features/users/User";
+import TodoList from "./features/todos/TodoList";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<PostsList />} />
+        <Route path="todo" element={<TodoList /> }/>
         <Route path="post">
           <Route index element={<AddPostForm />} />
           <Route path="edit/:postId" element={<EditPostForm />} />
