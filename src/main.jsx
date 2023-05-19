@@ -9,7 +9,7 @@ import "./index.css";
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
-import { apiSlice } from "./features/api/apiSlice.js";
+import { apiSlice } from "./features1/api/apiSlice.js";
 
 // store.dispatch(fetchPosts());
 // store.dispatch(fetchUsers());
@@ -29,7 +29,7 @@ import { apiSlice } from "./features/api/apiSlice.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <ApiProvider api={apiSlice}>
-        <App />
+      <App />
     </ApiProvider>
   </>
 );
